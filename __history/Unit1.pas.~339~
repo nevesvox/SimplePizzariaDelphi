@@ -1,0 +1,309 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.ComCtrls, Vcl.ToolWin, Data.DB, Vcl.Grids, Vcl.DBGrids, Datasnap.DBClient,
+  Vcl.ValEdit, Vcl.Buttons, Vcl.Imaging.pngimage, Vcl.Menus;
+
+type
+  TForm1 = class(TForm)
+    Panel1: TPanel;
+    Label1: TLabel;
+    Shape1: TShape;
+    Label2: TLabel;
+    lblQtdTotal: TLabel;
+    lblasas: TLabel;
+    comBoxAtendente: TComboBox;
+    GroupBox1: TGroupBox;
+    Shape2: TShape;
+    Label3: TLabel;
+    lblData: TLabel;
+    Button1: TButton;
+    GroupBox2: TGroupBox;
+    edtDescricao: TEdit;
+    Label4: TLabel;
+    edtValorProduto: TEdit;
+    Label5: TLabel;
+    edtQuantidadeProduto: TEdit;
+    Label6: TLabel;
+    BitBtn1: TBitBtn;
+    memoVenda: TMemo;
+    comBoxMesa: TComboBox;
+    Label7: TLabel;
+    lblValorTotal: TLabel;
+    bitFinalizarVenda: TBitBtn;
+    bitExcluirItem: TBitBtn;
+    Image1: TImage;
+    MainMenu1: TMainMenu;
+    CancelarVenda1: TMenuItem;
+    CancelarVenda2: TMenuItem;
+    Sair1: TMenuItem;
+    procedure FormShow(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure LimpaCampos();
+    procedure CarregaMemo();
+    procedure CancelaVenda();
+    procedure DeletaItemArray(var index : integer);
+    procedure bitFinalizarVendaClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure bitExcluirItemClick(Sender: TObject);
+    procedure Panel2Click(Sender: TObject);
+    procedure CancelarVenda2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+uses Unit2, Unit3, Unit5, Unit4;
+
+type Produto = record
+    descricao: string[50];
+    valor: real;
+    quantidade: integer;
+    end;
+var vProdutos : array of Produto;
+    n : integer = 0; // tamanho do vetor
+    x : Produto;
+
+procedure TForm1.LimpaCampos();
+begin
+  edtDescricao.Text := '';
+  edtValorProduto.Text := '';
+  edtQuantidadeProduto.Text := '';
+end;
+
+procedure TForm1.Panel2Click(Sender: TObject);
+begin
+
+end;
+
+// Limpa o Forms inteiro
+procedure TForm1.BitBtn1Click(Sender: TObject);
+begin
+  // Varifica se os campos do produto estão preenchidos
+  if (Trim(edtQuantidadeProduto.Text) <> '') and (StrToInt(edtQuantidadeProduto.Text) <> 0) and (edtDescricao.Text <> '')then
+  begin
+    // Verifica se o usuario escolheu uma mesa
+    if comBoxMesa.ItemIndex = -1 then
+    begin
+      // Caso não tenha escolhido exibe o alerta
+      ShowMessage('Por favor, selecione uma mesa!');
+      // Manda o focus para o combobox de mesas
+      comBoxMesa.SetFocus();
+      exit;
+    end;
+    // Desativa o combobox da mesa
+    comBoxMesa.Enabled := false;
+    // Ativa o botão de exclusão de itens
+    bitExcluirItem.Enabled := true;
+    // Ativa o botao de finalizar venda
+    bitFinalizarVenda.Enabled := true;
+    // Insere os dados
+    x.descricao := edtDescricao.Text;
+    x.valor := StrToFloat(edtValorProduto.Text);
+    x.quantidade := StrToInt(edtQuantidadeProduto.Text);
+    n := n + 1;
+    // Atualiza o tamanho do array
+    SetLength(vProdutos, n);
+    // Insere produto no array
+    vProdutos[n-1] := x;
+    CarregaMemo();
+  end;
+end;
+
+procedure CancelaVenda();
+begin
+  edtDescricao.Text := '';
+  edtValorProduto.Text := '';
+  edtQuantidadeProduto.Text := '';
+  comBoxMesa.Enabled := true;
+  comBoxMesa.ItemIndex := -1;
+  comBoxAtendente.ItemIndex := -1;
+  memoVenda.Lines.Clear();
+  bitFinalizarVenda.Enabled := false;
+  bitExcluirItem.Enabled := false;
+  // Limpa campos Form3
+  Form3.memoDescricao.Lines.Clear();
+  // Limpa campos Form4
+  Form4.edtNomeCliente.Enabled := true;
+  Form4.maskEdtCPF.Enabled := true;
+  Form4.comBoxTipoPagamento.Enabled := true;
+  Form4.edtValorRecebido.Enabled := true;
+  Form4.checkComissao.Enabled := true;
+  Form4.bitCancelar.Visible := true;
+  Form4.edtNomeCliente.Text := '';
+  Form4.edtValorRecebido.Text := '';
+  Form4.maskEdtCPF.Text := '';
+  Form4.memoCupomFiscal.Lines.Clear;
+  Form4.lblTrocoParcelas.Visible := false;
+  Form4.lblCaptionTrocoParcela.Visible := false;
+  Form4.comBoxTipoPagamento.ItemIndex := -1;
+  Form4.comBoxQtdParcelas.ItemIndex := -1;
+  Form4.comBoxQtdParcelas.Enabled := false;
+  Form4.checkComissao.Checked := false;
+  //
+  lblValorTotal.Caption := '--------';
+  lblQtdTotal.Caption := '0';
+  memoVenda.Lines.Clear;
+  // Limpa o array
+  SetLength(vProdutos, 0);
+  n := 0;
+end;
+
+procedure TForm1.CancelarVenda2Click(Sender: TObject);
+begin
+  edtDescricao.Text := '';
+  edtValorProduto.Text := '';
+  edtQuantidadeProduto.Text := '';
+  comBoxMesa.Enabled := true;
+  comBoxMesa.ItemIndex := -1;
+  comBoxAtendente.ItemIndex := -1;
+  memoVenda.Lines.Clear();
+  bitFinalizarVenda.Enabled := false;
+  bitExcluirItem.Enabled := false;
+  // Limpa campos Form3
+  Form3.memoDescricao.Lines.Clear();
+  // Limpa campos Form4
+  Form4.edtNomeCliente.Enabled := true;
+  Form4.maskEdtCPF.Enabled := true;
+  Form4.comBoxTipoPagamento.Enabled := true;
+  Form4.edtValorRecebido.Enabled := true;
+  Form4.checkComissao.Enabled := true;
+  Form4.bitCancelar.Visible := true;
+  Form4.edtNomeCliente.Text := '';
+  Form4.edtValorRecebido.Text := '';
+  Form4.maskEdtCPF.Text := '';
+  Form4.memoCupomFiscal.Lines.Clear;
+  Form4.lblTrocoParcelas.Visible := false;
+  Form4.lblCaptionTrocoParcela.Visible := false;
+  Form4.comBoxTipoPagamento.ItemIndex := -1;
+  Form4.comBoxQtdParcelas.ItemIndex := -1;
+  Form4.comBoxQtdParcelas.Enabled := false;
+  Form4.checkComissao.Checked := false;
+  //
+  lblValorTotal.Caption := '--------';
+  lblQtdTotal.Caption := '0';
+  memoVenda.Lines.Clear;
+  // Limpa o array
+  SetLength(vProdutos, 0);
+  n := 0;
+
+end;
+
+procedure TForm1.CarregaMemo();
+var i, nroRegistro : integer;
+    valorTotalProduto, valorTotalPedido : double;
+begin
+  memoVenda.Lines.Clear;
+  memoVenda.Lines.Add('----------------------- PEDIDO (MESA '+comBoxMesa.Items[comBoxMesa.ItemIndex]+') ----------------------------');
+  memoVenda.Lines.Add('NRO.    QTD.      DESCRICAO              VLR.UN(R$)  VLR.TOTAL(R$)');
+  memoVenda.Lines.Add('--------------------------------------------------------------------');
+
+  valorTotalPedido := 0;
+  nroRegistro := 0;
+  for i := 0 to n - 1 do
+  begin
+    nroRegistro := nroRegistro + (1 * vProdutos[i].quantidade);
+    valorTotalProduto :=  vProdutos[i].valor * vProdutos[i].quantidade;
+    if (Length(IntToStr(vProdutos[i].quantidade)) = 2) and (Length(Formatfloat('##,##0.00', vProdutos[i].valor)) = 4) then
+    begin
+      memoVenda.Lines.Add(IntToStr(i + 1) +'       '+IntToStr(vProdutos[i].quantidade) + '      ' + vProdutos[i].descricao + '    ' + Formatfloat('##,##0.00', vProdutos[i].valor)+ '        ' +Formatfloat('##,##0.00', valorTotalProduto));
+    end
+    else if Length(Formatfloat('##,##0.00', vProdutos[i].valor)) = 4 then
+    begin
+      memoVenda.Lines.Add(IntToStr(i + 1) +'       '+IntToStr(vProdutos[i].quantidade) + '       ' + vProdutos[i].descricao + '    ' + Formatfloat('##,##0.00', vProdutos[i].valor)+ '         ' +Formatfloat('##,##0.00', valorTotalProduto));
+    end
+    else if Length(IntToStr(vProdutos[i].quantidade)) = 2 then
+    begin
+      memoVenda.Lines.Add(IntToStr(i + 1) +'       '+IntToStr(vProdutos[i].quantidade) + '      ' + vProdutos[i].descricao + '   ' + Formatfloat('##,##0.00', vProdutos[i].valor)+ '       ' +Formatfloat('##,##0.00', valorTotalProduto));
+    end
+    else
+    begin
+      memoVenda.Lines.Add(IntToStr(i + 1) +'       '+IntToStr(vProdutos[i].quantidade) + '       ' + vProdutos[i].descricao + '   ' + Formatfloat('##,##0.00', vProdutos[i].valor)+ '        ' +Formatfloat('##,##0.00', valorTotalProduto));
+    end;
+
+    valorTotalPedido :=  valorTotalPedido + valorTotalProduto;
+  end;
+
+  lblValorTotal.Caption := Formatfloat('##,##0.00', valorTotalPedido);
+  lblQtdTotal.Caption := IntToStr(nroRegistro);
+  LimpaCampos();
+end;
+
+procedure TForm1.bitExcluirItemClick(Sender: TObject);
+begin
+  Form5.ShowModal;
+end;
+
+// Funcao responsável por remover um item do array de Produtos
+procedure TForm1.DeletaItemArray(var index : integer);
+var ALength: Cardinal;
+    i: Cardinal;
+begin
+  // Atualiza o index para a forma do array
+  index := index -1;
+
+  // Recupera o tamanho do array
+  ALength := Length(vProdutos);
+
+  if Length(vProdutos) = 1 then
+  begin
+    bitExcluirItem.Enabled := false;
+    bitFinalizarVenda.Enabled := false;
+  end;
+
+
+  // Válida o array
+  Assert(ALength > 0);
+  Assert(Index < ALength, 'Atenção! Não foi encontrado o número do produto inserido, tente novamente!');
+
+  // Percorre o array
+  for i := Index + 1 to ALength - 1 do
+  begin
+    // Atualiza o array atual removendo o item do index especificado
+    vProdutos[i - 1] := vProdutos[i];
+  end;
+  // Atualiza tamanho do array
+  SetLength(vProdutos, ALength - 1);
+  // Atualiza a váriavel de controle
+  n := n - 1;
+  // Recarrega o Memo
+  CarregaMemo();
+end;
+
+procedure TForm1.bitFinalizarVendaClick(Sender: TObject);
+begin
+  // Verifica se o atendente / garçom foi escolhidod
+  if comBoxAtendente.ItemIndex = -1 then
+  begin
+    // Exibe a mensagem
+    ShowMessage('Por favor, selecione um Atendente/Garçom!');
+    comBoxAtendente.SetFocus();
+    exit;
+  end;
+
+   Form3.Show;
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  Form2.ShowModal;
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+begin
+  lblData.Caption := DateToStr(Date);
+end;
+
+end.

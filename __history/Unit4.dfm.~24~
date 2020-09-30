@@ -1,0 +1,277 @@
+object Form4: TForm4
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Pagamento - Cupom FIscal'
+  ClientHeight = 512
+  ClientWidth = 841
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 16
+    Top = 13
+    Width = 91
+    Height = 18
+    Caption = 'Nome Cliente:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 16
+    Top = 67
+    Width = 30
+    Height = 18
+    Caption = 'CPF:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 150
+    Top = 65
+    Width = 133
+    Height = 18
+    Caption = 'Tipo de Pagamento:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object BitBtn1: TBitBtn
+    Left = 16
+    Top = 378
+    Width = 305
+    Height = 73
+    Caption = 'Emitir Cupom Fiscal'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    Kind = bkAll
+    NumGlyphs = 2
+    ParentFont = False
+    TabOrder = 0
+    OnClick = BitBtn1Click
+  end
+  object comBoxTipoPagamento: TComboBox
+    Left = 150
+    Top = 89
+    Width = 171
+    Height = 26
+    Style = csDropDownList
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ItemIndex = 0
+    ParentFont = False
+    TabOrder = 1
+    Text = 'DINHEIRO'
+    OnChange = comBoxTipoPagamentoChange
+    Items.Strings = (
+      'DINHEIRO'
+      'CR'#201'DITO'
+      'D'#201'BITO')
+  end
+  object maskEdtCPF: TMaskEdit
+    Left = 16
+    Top = 89
+    Width = 118
+    Height = 26
+    EditMask = '999.999.999-99;1;_'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    MaxLength = 14
+    ParentFont = False
+    TabOrder = 2
+    Text = '   .   .   -  '
+  end
+  object edtNomeCliente: TEdit
+    Left = 16
+    Top = 35
+    Width = 305
+    Height = 26
+    CharCase = ecUpperCase
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
+    OnExit = edtNomeClienteExit
+  end
+  object Panel1: TPanel
+    Left = 16
+    Top = 132
+    Width = 305
+    Height = 237
+    BorderStyle = bsSingle
+    TabOrder = 4
+    object lblCaptionTrocoParcela: TLabel
+      Left = 7
+      Top = 204
+      Width = 117
+      Height = 19
+      Caption = '             Troco:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object lblTrocoParcelas: TLabel
+      Left = 133
+      Top = 204
+      Width = 5
+      Height = 19
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label7: TLabel
+      Left = 30
+      Top = 166
+      Width = 97
+      Height = 19
+      Caption = 'Valor Total:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object lblValorTotalPagamento: TLabel
+      Left = 161
+      Top = 166
+      Width = 5
+      Height = 19
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label8: TLabel
+      Left = 133
+      Top = 166
+      Width = 22
+      Height = 19
+      Caption = 'R$'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object GroupBox1: TGroupBox
+      Left = 7
+      Top = 8
+      Width = 281
+      Height = 73
+      Caption = 'Parcelas'
+      TabOrder = 0
+      object Label4: TLabel
+        Left = 70
+        Top = 20
+        Width = 118
+        Height = 13
+        Caption = 'Quantidade de Parcelas:'
+      end
+    end
+    object comBoxQtdParcelas: TComboBox
+      Left = 77
+      Top = 47
+      Width = 118
+      Height = 21
+      Style = csDropDownList
+      Enabled = False
+      TabOrder = 1
+      OnChange = comBoxQtdParcelasChange
+      Items.Strings = (
+        '1'
+        '2'
+        '3'
+        '4')
+    end
+    object GroupBox2: TGroupBox
+      Left = 7
+      Top = 87
+      Width = 281
+      Height = 73
+      Caption = 'Troco'
+      TabOrder = 2
+      object Label5: TLabel
+        Left = 91
+        Top = 20
+        Width = 72
+        Height = 13
+        Caption = 'Valor recebido:'
+      end
+    end
+    object edtValorRecebido: TEdit
+      Left = 77
+      Top = 126
+      Width = 118
+      Height = 21
+      TabOrder = 3
+      OnExit = edtValorRecebidoExit
+    end
+  end
+  object memoCupomFiscal: TMemo
+    Left = 336
+    Top = 14
+    Width = 489
+    Height = 478
+    Color = clYellow
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Courier New'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 5
+  end
+  object BitBtn2: TBitBtn
+    Left = 16
+    Top = 457
+    Width = 305
+    Height = 35
+    Caption = 'Cancelar'
+    Kind = bkCancel
+    NumGlyphs = 2
+    TabOrder = 6
+  end
+end

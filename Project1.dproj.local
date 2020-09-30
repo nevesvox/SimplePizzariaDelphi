@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020/09/20 15:29:00.000.883,=C:\Users\neves\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2020/09/20 15:29:22.000.792,C:\Users\neves\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\neves\Documents\Embarcadero\Studio\Projects\PizzariaDelphi\Unit1.dfm</Transaction>
+    <Transaction>2020/09/20 15:29:22.000.792,C:\Users\neves\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\neves\Documents\Embarcadero\Studio\Projects\PizzariaDelphi\Unit1.pas</Transaction>
+    <Transaction>2020/09/20 15:29:24.000.955,C:\Users\neves\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\neves\Documents\Embarcadero\Studio\Projects\PizzariaDelphi\Project1.dproj</Transaction>
+    <Transaction>2020/09/20 18:18:13.000.473,=C:\Users\neves\Documents\Embarcadero\Studio\Projects\PizzariaDelphi\Unit2.pas</Transaction>
+    <Transaction>2020/09/21 18:34:06.000.066,=C:\Users\neves\Documents\Embarcadero\Studio\Projects\PizzariaDelphi\Unit3.pas</Transaction>
+    <Transaction>2020/09/21 19:02:55.000.438,=C:\Users\neves\Documents\Embarcadero\Studio\Projects\PizzariaDelphi\Unit4.pas</Transaction>
+    <Transaction>2020/09/23 21:33:21.000.953,=C:\Users\neves\Documents\Embarcadero\Studio\Projects\PizzariaDelphi\Unit5.pas</Transaction>
+  </Transactions>
+</BorlandProject>

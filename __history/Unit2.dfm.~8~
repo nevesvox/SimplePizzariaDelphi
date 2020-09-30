@@ -1,0 +1,96 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  Caption = 'Card'#225'pio'
+  ClientHeight = 311
+  ClientWidth = 269
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 8
+    Top = 224
+    Width = 45
+    Height = 18
+    Caption = 'Valor:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object lblRs: TLabel
+    Left = 68
+    Top = 224
+    Width = 21
+    Height = 18
+    Caption = 'R$'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object lblValorProduto: TLabel
+    Left = 95
+    Top = 224
+    Width = 36
+    Height = 18
+    Caption = '------'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object ListBox1: TListBox
+    Left = 8
+    Top = 24
+    Width = 253
+    Height = 185
+    ItemHeight = 13
+    Items.Strings = (
+      'Pizza de Calabresa..........'
+      'Pizza de Frango e Cheddar'
+      'Pizza de Palmito e Bacon....'
+      'Pizza de Quatro Queijos.....'
+      'Pizza de Camar'#227'o...........'
+      'Coca-Cola 350ml............'
+      'Sprite 2 Lts..................'
+      'Agua 500ml.................'
+      '')
+    TabOrder = 0
+    OnClick = ListBox1Click
+  end
+  object BitBtn1: TBitBtn
+    Left = 144
+    Top = 278
+    Width = 117
+    Height = 25
+    Caption = 'Inserir'
+    Kind = bkYes
+    NumGlyphs = 2
+    TabOrder = 1
+    OnClick = BitBtn1Click
+  end
+  object BitBtn2: TBitBtn
+    Left = 8
+    Top = 278
+    Width = 117
+    Height = 25
+    Caption = 'Cancelar'
+    Kind = bkCancel
+    NumGlyphs = 2
+    TabOrder = 2
+  end
+end
